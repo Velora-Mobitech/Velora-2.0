@@ -339,7 +339,7 @@ const GetDemo = () => {
         </div>
       </motion.section>
 
-      {/* Leadership & Research Team Section */}
+      {/* Meet the Team / Leadership Section - Commented out from UI for now
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -358,7 +358,7 @@ const GetDemo = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Team Member 1 */}
+            // Team Member 1
             <div className="glass rounded-2xl p-6 text-center border border-border/60">
               <img
                 src="/lovable-uploads/krishna-vamsi.jpg"
@@ -384,7 +384,7 @@ const GetDemo = () => {
               </div>
             </div>
 
-            {/* Team Member 2 */}
+            // Team Member 2
             <div className="glass rounded-2xl p-6 text-center border border-border/60">
               <img
                 src="/lovable-uploads/vijaya-balaji.jpg"
@@ -412,6 +412,7 @@ const GetDemo = () => {
           </div>
         </div>
       </motion.section>
+      */}
 
       <Footer />
     </div>

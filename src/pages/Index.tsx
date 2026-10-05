@@ -328,7 +328,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Leadership & Engineering Section */}
+      {/* Meet the Team / Leadership Section - Commented out from UI for now
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -352,7 +352,7 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Team Member 1 - Krishna Vamsi */}
+            // Team Member 1 - Krishna Vamsi
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -386,7 +386,7 @@ const Index = () => {
               </div>
             </motion.div>
 
-            {/* Team Member 2 - Vijaya Balaji */}
+            // Team Member 2 - Vijaya Balaji
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -422,6 +422,7 @@ const Index = () => {
           </div>
         </div>
       </motion.section>
+      */}
 
       {/* Final Diagnostic CTA Section */}
       <section
