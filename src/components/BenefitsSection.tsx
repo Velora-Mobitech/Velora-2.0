@@ -1,78 +1,101 @@
 import { motion } from "framer-motion";
 import {
-  Building2,
-  Users,
-  BarChart3,
-  Clock,
   DollarSign,
-  MapPin,
-  Smartphone,
-  Leaf,
+  Receipt,
+  Route,
+  ShieldAlert,
+  ClockAlert,
+  Flame,
+  UserCheck,
+  TrendingDown,
 } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 
 const BenefitsSection = () => {
-  const companyBenefits = [
+  const hardMonetaryCosts = [
     {
-      icon: <Building2 className="w-8 h-8 text-primary" />,
-      title: "Hassle-Free Management",
-      description: "Complete travel management solution with automated systems",
-    },
-    {
-      icon: <DollarSign className="w-8 h-8 text-primary" />,
-      title: "Cost Optimization",
+      icon: <DollarSign className="w-7 h-7 text-primary" />,
+      title: "Spot-Ride Surcharges",
       description:
-        "Significant cost savings through optimized fleet usage and sharing",
+        "Emergency replacement rides marked up at 2.5x–3x contractual tariffs during driver no-shows.",
     },
     {
-      icon: <Clock className="w-8 h-8 text-primary" />,
-      title: "Punctuality Tracking",
+      icon: <Receipt className="w-7 h-7 text-primary" />,
+      title: "Minimum Guarantee Traps",
       description:
-        "Real-time vehicle tracking ensuring timely employee arrivals",
+        "Fixed vehicle retainers and minimum billing thresholds paid despite low actual seat utilization.",
     },
     {
-      icon: <BarChart3 className="w-8 h-8 text-primary" />,
-      title: "Advanced Analytics",
+      icon: <Route className="w-7 h-7 text-primary" />,
+      title: "Dead Kilometre Bleed",
       description:
-        "Comprehensive insights on cost, utilization, and carbon emissions",
+        "Unmonitored empty vehicle repositioning and non-revenue transit kilometres buried in bulk invoicing.",
     },
     {
-      icon: <Leaf className="w-8 h-8 text-primary" />,
-      title: "Sustainability Reporting",
-      description: "BRSR/CSRD compliance with Scope-3 CO₂ tracking",
+      icon: <TrendingDown className="w-7 h-7 text-primary" />,
+      title: "Billed Odometer Discrepancies",
+      description:
+        "Systemic spread between raw GPS telematics actuals and vendor-reported billing line items.",
+    },
+    {
+      icon: <ClockAlert className="w-7 h-7 text-primary" />,
+      title: "Dispute & Reconciliation Drag",
+      description:
+        "Costly administrative cycles reconciling disputed vendor SLA penalties and contractual deductions.",
     },
   ];
 
-  const employeeBenefits = [
+  const nonMonetizedRisks = [
     {
-      icon: <MapPin className="w-8 h-8 text-primary" />,
-      title: "Multiple Travel Modes",
+      icon: <ClockAlert className="w-7 h-7 text-primary" />,
+      title: "Shift Production Delays",
       description:
-        "Choose from various transportation options based on convenience",
+        "Downstream operational downtime caused by delayed gate arrivals for mission-critical shifts.",
     },
     {
-      icon: <Smartphone className="w-8 h-8 text-primary" />,
-      title: "Flexible Booking",
-      description: "Simple app-based booking with flexible scheduling options",
+      icon: <ShieldAlert className="w-7 h-7 text-primary" />,
+      title: "Safety & Compliance Exposure",
+      description:
+        "Escort protocol breaches, route deviation anomalies, and female employee safety compliance risks.",
     },
     {
-      icon: <Users className="w-8 h-8 text-primary" />,
-      title: "Smart Sharing",
+      icon: <Flame className="w-7 h-7 text-primary" />,
+      title: "Dispatcher Firefighting",
       description:
-        "Cost-effective shared rides with intelligent route matching",
+        "Transport teams spending 100+ hours monthly on tactical emergency re-routing instead of strategic sourcing.",
     },
     {
-      icon: <Clock className="w-8 h-8 text-primary" />,
-      title: "Time Optimization",
+      icon: <UserCheck className="w-7 h-7 text-primary" />,
+      title: "Commuter Friction & Attrition",
       description:
-        "Intelligent routing to avoid delays and reduce commute time",
+        "Chronic arrival unpredictability impacting employee satisfaction, workplace attendance, and retention.",
     },
   ];
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 bg-background border-t border-border/40">
       <div className="container px-4">
-        {/* Company Benefits */}
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <div className="inline-block mb-3 px-3 py-1 rounded-full glass">
+            <span className="text-xs uppercase tracking-wider font-semibold text-primary">
+              The Failure Economics Framework
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-normal mb-4">
+            A failed trip costs more than{" "}
+            <br />
+            <span className="text-gradient font-medium">the replacement ride.</span>
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
+            Velora strictly separates direct cash drain from ground-truth operational risk.
+          </p>
+          <div className="inline-block px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 text-xs md:text-sm font-mono text-primary">
+            Effective True Cost = Contract Tariff + Compound Failure Burden
+          </div>
+        </div>
+
+        {/* Hard Monetary Costs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -80,19 +103,18 @@ const BenefitsSection = () => {
           transition={{ duration: 0.6 }}
           className="mb-20"
         >
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-normal mb-4">
-              What's in it for{" "}
-              <span className="text-gradient font-medium">Companies?</span>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Transform your organization's transportation management with
-              comprehensive solutions
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold text-foreground flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary inline-block"></span>
+              Hard Monetary Costs
+            </h3>
+            <p className="text-sm text-muted-foreground mt-1">
+              Direct, auditable financial leakage appearing on monthly vendor invoices and expense ledgers.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {companyBenefits.map((benefit, index) => (
+            {hardMonetaryCosts.map((benefit, index) => (
               <motion.div
                 key={benefit.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -103,10 +125,10 @@ const BenefitsSection = () => {
                 <Card className="glass hover:border-primary/20 transition-all duration-300 h-full">
                   <CardContent className="p-6">
                     <div className="mb-4">{benefit.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2 text-foreground">
+                    <h4 className="text-lg font-semibold mb-2 text-foreground">
                       {benefit.title}
-                    </h3>
-                    <p className="text-muted-foreground">
+                    </h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {benefit.description}
                     </p>
                   </CardContent>
@@ -116,26 +138,25 @@ const BenefitsSection = () => {
           </div>
         </motion.div>
 
-        {/* Employee Benefits */}
+        {/* Non-Monetized Risk */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-normal mb-4">
-              What's in it for{" "}
-              <span className="text-gradient font-medium">Employees?</span>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Empower your workforce with convenient, flexible, and intelligent
-              transportation options
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold text-foreground flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary inline-block"></span>
+              Non-Monetized Operational Risk
+            </h3>
+            <p className="text-sm text-muted-foreground mt-1">
+              Critical operational consequences that should not be artificially monetized, but directly impact enterprise reliability.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {employeeBenefits.map((benefit, index) => (
+            {nonMonetizedRisks.map((benefit, index) => (
               <motion.div
                 key={benefit.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -146,10 +167,10 @@ const BenefitsSection = () => {
                 <Card className="glass hover:border-primary/20 transition-all duration-300 h-full">
                   <CardContent className="p-6">
                     <div className="mb-4">{benefit.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2 text-foreground">
+                    <h4 className="text-lg font-semibold mb-2 text-foreground">
                       {benefit.title}
-                    </h3>
-                    <p className="text-muted-foreground">
+                    </h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {benefit.description}
                     </p>
                   </CardContent>

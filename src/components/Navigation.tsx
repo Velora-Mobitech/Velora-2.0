@@ -75,19 +75,29 @@ const Navigation = () => {
 
   const navItems = [
     {
-      name: "Models",
-      href: "#features",
-      onClick: () => scrollToSection("features"),
+      name: "Intelligence",
+      href: "#intelligence",
+      onClick: () => scrollToSection("intelligence"),
     },
     {
-      name: "Pricing",
-      href: "#pricing",
-      onClick: () => scrollToSection("pricing"),
+      name: "How It Works",
+      href: "#how-it-works",
+      onClick: () => scrollToSection("how-it-works"),
     },
     {
-      name: "Success Stories",
-      href: "#testimonials",
-      onClick: () => scrollToSection("testimonials"),
+      name: "Decisions",
+      href: "#decisions",
+      onClick: () => scrollToSection("decisions"),
+    },
+    {
+      name: "Why Velora",
+      href: "#why-velora",
+      onClick: () => scrollToSection("why-velora"),
+    },
+    {
+      name: "Validation",
+      href: "#validation",
+      onClick: () => scrollToSection("validation"),
     },
   ];
 
@@ -95,8 +105,8 @@ const Navigation = () => {
     <header
       className={`fixed top-3.5 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 rounded-full ${
         isScrolled
-          ? "h-14 bg-background/40 backdrop-blur-xl border border-border scale-95 w-[90%] max-w-2xl"
-          : "h-14 bg-background w-[95%] max-w-3xl"
+          ? "h-14 bg-background/60 backdrop-blur-xl border border-border scale-95 w-[92%] max-w-4xl"
+          : "h-14 bg-background/90 backdrop-blur-md border border-border/50 w-[95%] max-w-5xl"
       }`}
     >
       <div className="mx-auto h-full px-6">
@@ -109,9 +119,12 @@ const Navigation = () => {
               <img
                 src="/favicon.ico"
                 alt="Velora Logo"
-                className="w-0.0005 h-0.005"
+                className="w-5 h-5"
               />
               <span className="font-bold text-base">Velora</span>
+              <span className="hidden lg:inline-block text-xs text-muted-foreground font-normal border-l border-border pl-2">
+                Mobility Intelligence
+              </span>
             </button>
           </div>
 
@@ -127,7 +140,7 @@ const Navigation = () => {
                     item.onClick();
                   }
                 }}
-                className="text-sm font-semibold text-foreground hover:text-primary transition-all duration-300"
+                className="text-xs lg:text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-200"
               >
                 {item.name}
               </a>
@@ -136,9 +149,9 @@ const Navigation = () => {
             <Button
               onClick={navigateToGetDemo}
               size="sm"
-              className="button-gradient"
+              className="button-gradient text-xs px-3.5"
             >
-              Get Demo
+              Get Diagnostic
             </Button>
           </div>
 
@@ -176,7 +189,7 @@ const Navigation = () => {
                     }}
                     className="button-gradient mt-4"
                   >
-                    Get Demo
+                    Get a Mobility Diagnostic
                   </Button>
                 </div>
               </SheetContent>

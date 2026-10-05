@@ -1,25 +1,30 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, Sparkles, FileText, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CardSpotlight } from "./CardSpotlight";
+import { useNavigate } from "react-router-dom";
 
-const PricingTier = ({
+const RecommendationCard = ({
+  tag,
   name,
-  price,
+  impact,
   description,
   features,
-  isPopular,
+  isPriority,
   isSelected,
   onSelect,
+  onAction,
 }: {
+  tag: string;
   name: string;
-  price: string;
+  impact: string;
   description: string;
   features: string[];
-  isPopular?: boolean;
+  isPriority?: boolean;
   isSelected: boolean;
   onSelect: () => void;
+  onAction: () => void;
 }) => (
   <motion.div
     whileHover={{ scale: 1.02 }}
@@ -37,41 +42,58 @@ const PricingTier = ({
       className={`h-full transition-all duration-300 ${
         isSelected
           ? "border-primary"
-          : isPopular
-          ? "border-primary"
+          : isPriority
+          ? "border-primary/80"
           : "border-border hover:border-primary/50"
       }`}
     >
-      <div className="relative h-full p-6 flex flex-col">
-        {isPopular && (
-          <span className="text-xs font-medium bg-primary/10 text-primary rounded-full px-3 py-1 w-fit mb-4">
-            Most Popular
-          </span>
-        )}
-        <h3 className="text-xl font-medium mb-2">{name}</h3>
-        <div className="mb-4">
-          <span className="text-4xl font-bold">{price}</span>
-          {price !== "Custom" && price !== "Let's Talk" && (
-            <span className="text-muted-foreground">/month</span>
-          )}
+      <div className="relative h-full p-6 flex flex-col justify-between">
+        <div>
+          <div className="flex items-center justify-between gap-2 mb-4">
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 rounded-full px-3 py-1">
+              {tag}
+            </span>
+            <span className="text-[10px] font-mono tracking-wider uppercase text-muted-foreground bg-background/60 px-2 py-0.5 rounded border border-border/60">
+              Illustrative Example
+            </span>
+          </div>
+
+          <h3 className="text-xl font-semibold mb-2 text-foreground leading-snug">{name}</h3>
+          
+          <div className="mb-4">
+            <span className="text-3xl font-bold text-foreground">{impact}</span>
+            <span className="text-xs text-muted-foreground ml-2 font-mono">projected value</span>
+          </div>
+
+          <p className="text-sm text-muted-foreground mb-6 leading-relaxed">{description}</p>
+
+          <div className="text-xs font-semibold text-foreground/90 uppercase tracking-wider mb-3">
+            Explainable Evidence & Constraints
+          </div>
+
+          <ul className="space-y-3 mb-8">
+            {features.map((feature, index) => (
+              <li key={index} className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <span className="text-xs text-muted-foreground leading-normal">{feature}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <p className="text-muted-foreground mb-6">{description}</p>
-        <ul className="space-y-3 mb-8 flex-grow">
-          {features.map((feature, index) => (
-            <li key={index} className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-primary" />
-              <span className="text-sm text-muted-foreground">{feature}</span>
-            </li>
-          ))}
-        </ul>
+
         <Button
+          onClick={(e) => {
+            e.stopPropagation();
+            onAction();
+          }}
           className={`w-full transition-all duration-300 ${
             isSelected
               ? "button-gradient shadow-lg shadow-primary/30"
               : "button-gradient"
           }`}
         >
-          Get Quote
+          Explore In Diagnostic
+          <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </div>
     </CardSpotlight>
@@ -79,93 +101,108 @@ const PricingTier = ({
 );
 
 export const PricingSection = () => {
+  const navigate = useNavigate();
   const [selectedCard, setSelectedCard] = useState<string>(
-    "Fully Managed Model"
+    "Shift Late-Night Capacity: Vendor A → B"
   );
 
-  const pricingData = [
+  const recommendationData = [
     {
-      name: "Travel Allowance Model",
-      price: "Per Credit",
-      description: "Fixed monthly allowances with automated credit management",
+      tag: "Route Optimization",
+      name: "Consolidate 17 Low-Occupancy Routes",
+      impact: "₹31.4L / yr",
+      description:
+        "Merge parallel arterial corridors running below 35% seat capacity during morning and evening shift changeovers.",
       features: [
-        "Monthly credit allocation per employee",
-        "Route-based fare deduction",
-        "Usage-based company billing",
-        "Employee self-service portal",
-        "Automated expense tracking",
-        "Cost optimization insights",
+        "Observed Evidence: 90 days GPS logs showing <35% seat load",
+        "Tariff Baseline: Standard 7-seater SUV contractual rate",
+        "Constraint Enforced: Female escort protocols & max 12-min detour",
+        "Expected Impact: Net elimination of 14 redundant vehicle retainers",
       ],
-      isPopular: false,
+      isPriority: false,
     },
     {
-      name: "Fully Managed Model",
-      price: "Custom",
+      tag: "Vendor Rebalancing",
+      name: "Shift Late-Night Capacity: Vendor A → B",
+      impact: "₹18.6L / yr",
       description:
-        "Complete transportation management with flexible employee access controls",
+        "Reallocate 23 midnight pick-up schedules from Vendor A to Vendor B based on effective failure economics.",
       features: [
-        "Global employee access control",
-        "Dashboard-based travel restrictions",
-        "Monthly billing based on usage",
-        "Real-time fleet management",
-        "Advanced analytics & reporting",
-        "24/7 priority support",
+        "Observed Evidence: Vendor A has 14.2% no-show rate after 10 PM",
+        "Failure Economics: Emergency spot-ride markups averaging 2.8x",
+        "Constraint Enforced: Verified vehicle buffers for Vendor B",
+        "Expected Impact: 68% drop in escalations + net cost recovery",
       ],
-      isPopular: true,
+      isPriority: true,
     },
     {
-      name: "Enterprise Custom",
-      price: "Let's Talk",
+      tag: "Invoice Reconciliation",
+      name: "Audit Vendor C Odometer Divergence",
+      impact: "₹9.2L Recoverable",
       description:
-        "Tailored solutions for large enterprises with specific requirements",
+        "Flag systematic variance between billed vendor invoice mileage and raw telematics odometer traces.",
       features: [
-        "Custom integration solutions",
-        "API-based HRIS/ERP integration",
-        "White-label mobile app",
-        "Dedicated account manager",
-        "SLA guarantees",
-        "Advanced security compliance",
+        "Observed Evidence: 8.4% spread between billed km and GPS traces",
+        "Contract Baseline: Active contractual telematics audit clawback",
+        "Constraint Enforced: Normal toll-booth detour tolerance of 1.5 km",
+        "Expected Impact: Actionable credit note for immediate recovery",
       ],
-      isPopular: false,
+      isPriority: false,
     },
   ];
 
   return (
-    <section className="container px-4 py-24">
-      <div className="max-w-2xl mx-auto text-center mb-12">
+    <section id="decisions" className="container px-4 py-24">
+      <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="inline-block mb-3 px-3 py-1 rounded-full glass">
+          <span className="text-xs uppercase tracking-wider font-semibold text-primary">
+            The Decision Engine
+          </span>
+        </div>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-5xl md:text-6xl font-normal mb-6"
+          className="text-4xl md:text-5xl font-normal mb-4"
         >
-          Choose Your{" "}
-          <span className="text-gradient font-medium">Working Model</span>
+          Don't stop at the diagnosis.{" "}
+          <br />
+          <span className="text-gradient font-medium">Decide what changes next.</span>
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
-          className="text-lg text-muted-foreground"
+          className="text-lg text-muted-foreground leading-relaxed"
         >
-          Flexible engagement models designed to fit your company's
-          transportation management preferences
+          Velora rejects black-box algorithms. Every recommendation satisfies a five-part anatomical standard: Actionable Directive, Observed Evidence, Explicit Assumptions, Realistic Constraints, and Expected Impact.
         </motion.p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {pricingData.map((tier) => (
-          <PricingTier
+        {recommendationData.map((tier) => (
+          <RecommendationCard
             key={tier.name}
+            tag={tier.tag}
             name={tier.name}
-            price={tier.price}
+            impact={tier.impact}
             description={tier.description}
             features={tier.features}
-            isPopular={tier.isPopular}
+            isPriority={tier.isPriority}
             isSelected={selectedCard === tier.name}
             onSelect={() => setSelectedCard(tier.name)}
+            onAction={() => {
+              navigate("/get-demo");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
           />
         ))}
+      </div>
+
+      <div className="mt-12 text-center">
+        <p className="text-sm font-medium text-muted-foreground">
+          Velora does not stop at reporting what happened. <span className="text-foreground">It recommends what should happen next.</span>
+        </p>
       </div>
     </section>
   );

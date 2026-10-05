@@ -12,93 +12,96 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { Calculator, Car, Users, Clock, MapPin, Zap } from "lucide-react";
+import { Calculator, Users, Building2, TrendingDown, ArrowRight, ShieldCheck } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-interface CalculatorInputs {
+interface DiagnosticInputs {
+  monthlySpend: number;
   employeeCount: number;
   shifts: number;
-  distance: number;
-  vehicleType: "sedan" | "suv" | "tempo";
-  frequency: "daily" | "weekly" | "monthly";
-  hasAC: boolean;
-  hasGPS: boolean;
+  vendorCount: number;
+  hasTelematicsAudit: boolean;
+  hasSpotReliance: boolean;
 }
 
 export const PricingCalculator: React.FC = () => {
-  const [inputs, setInputs] = useState<CalculatorInputs>({
-    employeeCount: 50,
-    shifts: 1,
-    distance: 20,
-    vehicleType: "sedan",
-    frequency: "daily",
-    hasAC: true,
-    hasGPS: true,
+  const navigate = useNavigate();
+  const [inputs, setInputs] = useState<DiagnosticInputs>({
+    monthlySpend: 3500000,
+    employeeCount: 450,
+    shifts: 2,
+    vendorCount: 4,
+    hasTelematicsAudit: false,
+    hasSpotReliance: true,
   });
 
-  const calculateEstimate = (): number => {
-    // Base price per km
-    const kmRate = {
-      sedan: 12,
-      suv: 15,
-      tempo: 20,
-    }[inputs.vehicleType];
-
-    // Basic calculation
-    let estimate = inputs.distance * kmRate;
-
-    // Multiply by shifts
-    estimate *= inputs.shifts;
-
-    // Vehicle capacity adjustments
-    const vehicleCapacity = {
-      sedan: 4,
-      suv: 6,
-      tempo: 12,
-    }[inputs.vehicleType];
-
-    const vehiclesNeeded = Math.ceil(inputs.employeeCount / vehicleCapacity);
-    estimate *= vehiclesNeeded;
-
-    // Frequency multiplier
-    const frequencyMultiplier = {
-      daily: 30,
-      weekly: 4,
-      monthly: 1,
-    }[inputs.frequency];
-
-    estimate *= frequencyMultiplier;
-
-    // Add premium features
-    if (inputs.hasAC) estimate *= 1.2;
-    if (inputs.hasGPS) estimate *= 1.1;
-
-    return Math.round(estimate);
+  // Identifiable Savings: Theoretical mathematical opportunity (corridor overlap, dead km, billing anomalies)
+  const calculateIdentifiable = (): number => {
+    let rate = 0.11; // 11% baseline mathematical leakage
+    if (!inputs.hasTelematicsAudit) rate += 0.035; // +3.5% invoice reconciliation spread
+    if (inputs.hasSpotReliance) rate += 0.025; // +2.5% failure surcharge leakage
+    if (inputs.vendorCount > 3) rate += 0.015; // vendor fragmentation penalty
+    return Math.round(inputs.monthlySpend * rate);
   };
 
-  const savingsEstimate = (): number => {
-    const regularCost = calculateEstimate() * 1.4; // Assuming 40% savings
-    return Math.round(regularCost - calculateEstimate());
+  // Implementable Savings: Realistic operational capture accounting for safety constraints & SLA buffers
+  const calculateImplementable = (): number => {
+    const identifiable = calculateIdentifiable();
+    // Operations realistically capture ~55-65% of mathematical ceiling due to detour/escort rules
+    return Math.round(identifiable * 0.62);
+  };
+
+  const calculateAnnualizedImplementable = (): number => {
+    return calculateImplementable() * 12;
   };
 
   return (
-    <section className="py-24 bg-background" id="calculator">
+    <section className="py-24 bg-background border-t border-border/40" id="calculator">
       <div className="container px-4">
         <div className="text-center mb-12">
+          <div className="inline-block mb-3 px-3 py-1 rounded-full glass">
+            <span className="text-xs uppercase tracking-wider font-semibold text-primary">
+              Diagnostic Estimator
+            </span>
+          </div>
           <h2 className="text-4xl md:text-5xl font-normal mb-4">
-            Calculate Your{" "}
-            <span className="text-gradient font-medium">Transport Costs</span>
+            Model Your Mobility{" "}
+            <span className="text-gradient font-medium">Opportunity Ceiling</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Get an instant estimate of your company's transportation costs and
-            potential savings with Velora's smart mobility solutions.
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Estimate identifiable vs. implementable efficiency opportunities across billing reconciliation, route consolidation, and vendor failure economics.
           </p>
         </div>
 
-        <Card className="max-w-4xl mx-auto p-6 md:p-8">
+        <Card className="max-w-4xl mx-auto p-6 md:p-8 glass border-border/60">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="employees">Number of Employees</Label>
+                <Label htmlFor="monthlySpend">Approx. Monthly Mobility Spend (₹)</Label>
+                <div className="relative">
+                  <Input
+                    id="monthlySpend"
+                    name="monthlySpend"
+                    type="number"
+                    step="50000"
+                    value={inputs.monthlySpend}
+                    onChange={(e) =>
+                      setInputs({
+                        ...inputs,
+                        monthlySpend: parseInt(e.target.value) || 0,
+                      })
+                    }
+                    className="pl-4"
+                    min="100000"
+                  />
+                </div>
+                <span className="text-[11px] text-muted-foreground">
+                  Current spend across fleet vendors and spot cabs
+                </span>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="employees">Daily Employees Using Transport</Label>
                 <div className="relative">
                   <Users className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -113,119 +116,88 @@ export const PricingCalculator: React.FC = () => {
                       })
                     }
                     className="pl-10"
-                    min="1"
+                    min="10"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="shifts">Number of Shifts</Label>
-                <div className="relative">
-                  <Clock className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="shifts"
-                    name="shifts"
-                    type="number"
-                    value={inputs.shifts}
-                    onChange={(e) =>
-                      setInputs({
-                        ...inputs,
-                        shifts: parseInt(e.target.value) || 1,
-                      })
-                    }
-                    className="pl-10"
-                    min="1"
-                    max="3"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="distance">Average Distance (km)</Label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="distance"
-                    name="distance"
-                    type="number"
-                    value={inputs.distance}
-                    onChange={(e) =>
-                      setInputs({
-                        ...inputs,
-                        distance: parseInt(e.target.value) || 0,
-                      })
-                    }
-                    className="pl-10"
-                    min="1"
-                  />
-                </div>
+                <Label htmlFor="shifts">Operating Shifts per Day</Label>
+                <Select
+                  value={String(inputs.shifts)}
+                  onValueChange={(val) =>
+                    setInputs({ ...inputs, shifts: parseInt(val) || 1 })
+                  }
+                  name="shifts"
+                >
+                  <SelectTrigger id="shifts">
+                    <SelectValue placeholder="Select shifts" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">1 General Shift</SelectItem>
+                    <SelectItem value="2">2 Rotational Shifts</SelectItem>
+                    <SelectItem value="3">3 Shifts (24/7 Operations)</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="vehicleType">Vehicle Type</Label>
-                <Select
-                  value={inputs.vehicleType}
-                  onValueChange={(value: any) =>
-                    setInputs({ ...inputs, vehicleType: value })
-                  }
-                  name="vehicleType"
-                >
-                  <SelectTrigger id="vehicleType">
-                    <Car className="w-4 h-4 mr-2" />
-                    <SelectValue placeholder="Select vehicle type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="sedan">Sedan (4 Seater)</SelectItem>
-                    <SelectItem value="suv">SUV (6 Seater)</SelectItem>
-                    <SelectItem value="tempo">
-                      Tempo Traveller (12 Seater)
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="vendorCount">Active Fleet Vendors / FSPs</Label>
+                <div className="relative">
+                  <Building2 className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    id="vendorCount"
+                    name="vendorCount"
+                    type="number"
+                    value={inputs.vendorCount}
+                    onChange={(e) =>
+                      setInputs({
+                        ...inputs,
+                        vendorCount: parseInt(e.target.value) || 1,
+                      })
+                    }
+                    className="pl-10"
+                    min="1"
+                    max="20"
+                  />
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="frequency">Service Frequency</Label>
-                <Select
-                  value={inputs.frequency}
-                  onValueChange={(value: any) =>
-                    setInputs({ ...inputs, frequency: value })
-                  }
-                  name="frequency"
-                >
-                  <SelectTrigger id="frequency">
-                    <Calculator className="w-4 h-4 mr-2" />
-                    <SelectValue placeholder="Select frequency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="daily">Daily Service</SelectItem>
-                    <SelectItem value="weekly">Weekly Service</SelectItem>
-                    <SelectItem value="monthly">Monthly Service</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-4 pt-4">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="ac">Air Conditioning</Label>
+              <div className="space-y-4 pt-3">
+                <div className="flex items-center justify-between gap-4 p-3 rounded-lg bg-background/40 border border-border/40">
+                  <div>
+                    <Label htmlFor="telematics" className="text-xs font-semibold cursor-pointer">
+                      Automated GPS-to-Invoice Audit
+                    </Label>
+                    <p className="text-[11px] text-muted-foreground">
+                      Do you currently cross-verify raw odometer logs against billed lines?
+                    </p>
+                  </div>
                   <Switch
-                    id="ac"
-                    checked={inputs.hasAC}
+                    id="telematics"
+                    checked={inputs.hasTelematicsAudit}
                     onCheckedChange={(checked) =>
-                      setInputs({ ...inputs, hasAC: checked })
+                      setInputs({ ...inputs, hasTelematicsAudit: checked })
                     }
                   />
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="gps">GPS Tracking</Label>
+                <div className="flex items-center justify-between gap-4 p-3 rounded-lg bg-background/40 border border-border/40">
+                  <div>
+                    <Label htmlFor="spot" className="text-xs font-semibold cursor-pointer">
+                      Spot-Ride / On-Demand Backup
+                    </Label>
+                    <p className="text-[11px] text-muted-foreground">
+                      Do operations rely on emergency ad-hoc cabs for vendor no-shows?
+                    </p>
+                  </div>
                   <Switch
-                    id="gps"
-                    checked={inputs.hasGPS}
+                    id="spot"
+                    checked={inputs.hasSpotReliance}
                     onCheckedChange={(checked) =>
-                      setInputs({ ...inputs, hasGPS: checked })
+                      setInputs({ ...inputs, hasSpotReliance: checked })
                     }
                   />
                 </div>
@@ -235,38 +207,51 @@ export const PricingCalculator: React.FC = () => {
 
           <div className="mt-8 pt-8 border-t border-border">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 glass rounded-xl text-center">
-                <h3 className="text-lg font-medium mb-2">
-                  Estimated Monthly Cost
+              <div className="p-6 glass rounded-xl text-center border-border/60">
+                <div className="inline-block px-2.5 py-0.5 rounded bg-muted/60 text-[10px] font-mono uppercase tracking-wider text-muted-foreground mb-2">
+                  Identifiable Opportunity
+                </div>
+                <h3 className="text-sm font-medium text-muted-foreground mb-1">
+                  Theoretical Mathematical Ceiling
                 </h3>
-                <p className="text-4xl font-bold text-primary">
-                  ₹{calculateEstimate().toLocaleString()}
+                <p className="text-3xl md:text-4xl font-bold text-foreground">
+                  ₹{calculateIdentifiable().toLocaleString()}
+                  <span className="text-xs font-normal text-muted-foreground"> / month</span>
                 </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  with Velora's Smart Solutions
+                <p className="text-xs text-muted-foreground mt-2">
+                  Unconstrained corridor overlap, dead km & billing spread
                 </p>
               </div>
 
-              <div className="p-6 glass rounded-xl text-center">
-                <h3 className="text-lg font-medium mb-2">
-                  Potential Monthly Savings
+              <div className="p-6 glass rounded-xl text-center border-primary/30 shadow-lg shadow-primary/5">
+                <div className="inline-block px-2.5 py-0.5 rounded bg-primary/10 text-[10px] font-mono uppercase tracking-wider text-primary mb-2 font-medium">
+                  Implementable Opportunity
+                </div>
+                <h3 className="text-sm font-medium text-muted-foreground mb-1">
+                  Realistic Operational Recovery
                 </h3>
-                <p className="text-4xl font-bold text-green-500">
-                  ₹{savingsEstimate().toLocaleString()}
+                <p className="text-3xl md:text-4xl font-bold text-primary">
+                  ₹{calculateImplementable().toLocaleString()}
+                  <span className="text-xs font-normal text-muted-foreground"> / month</span>
                 </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  vs Traditional Transport
+                <p className="text-xs text-primary/80 font-mono mt-2">
+                  ~₹{(calculateAnnualizedImplementable() / 100000).toFixed(1)}L annual potential opportunity
                 </p>
               </div>
             </div>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground mb-4">
-                *This is an approximate estimate. Contact us for a detailed
-                quote and customized solutions.
+              <p className="text-xs text-muted-foreground mb-4 max-w-xl mx-auto">
+                <span className="font-semibold text-foreground/80">ILLUSTRATIVE ESTIMATE:</span> Realized savings depend on verified telemetry audits, route network topologies, and contract terms. We never promise synthetic guaranteed returns.
               </p>
-              <Button className="button-gradient">
-                Get Detailed Quote <Zap className="ml-2 w-4 h-4" />
+              <Button
+                onClick={() => {
+                  navigate("/get-demo");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className="button-gradient"
+              >
+                Get a Mobility Diagnostic <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </div>
           </div>

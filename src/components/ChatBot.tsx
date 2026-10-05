@@ -34,7 +34,7 @@ const ChatBot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "Hello! I'm Velora's AI assistant powered by advanced AI. I can help you with information about our B2B transport models, pricing, features, or answer any general questions you might have. How can I assist you today?",
+      text: "Hello! I'm Velora's AI Mobility Intelligence Assistant. I can help answer questions about our 5 Intelligence Modules, data reconciliation across your existing ETMS, the Failure Economics framework, or how to get a Mobility Efficiency Diagnostic. How can I assist you today?",
       isUser: false,
       timestamp: new Date(),
     },
@@ -49,11 +49,11 @@ const ChatBot = () => {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const quickQuestions = [
-    "What are Velora's transport models?",
-    "How does pricing work?",
-    "Show me the pricing calculator",
-    "How do I get started?",
-    "Tell me about sustainability",
+    "What is Velora Mobility Intelligence?",
+    "What is the Failure Economics framework?",
+    "Does Velora replace our existing ETMS?",
+    "Explain the 5 Intelligence Modules",
+    "How do I get a Mobility Diagnostic?",
   ];
 
   const scrollToBottom = () => {
@@ -94,14 +94,14 @@ const ChatBot = () => {
       return quickResponse;
     }
 
-    // Handle pricing calculator requests with scroll functionality
+    // Handle diagnostic calculator requests with scroll functionality
     if (
       input.toLowerCase().includes("calculator") ||
       input.toLowerCase().includes("calculate") ||
       input.toLowerCase().includes("show me the pricing calculator") ||
-      input.toLowerCase().includes("estimate my cost")
+      input.toLowerCase().includes("estimate my cost") ||
+      input.toLowerCase().includes("savings")
     ) {
-      // Scroll to calculator section
       setTimeout(() => {
         const calculatorElement = document.getElementById("calculator");
         if (calculatorElement) {
@@ -109,7 +109,7 @@ const ChatBot = () => {
         }
       }, 500);
 
-      return "🧮 **Pricing Calculator**\n\nI'm scrolling you to our interactive pricing calculator below! You can:\n\n• Enter your company details (employee count, shifts)\n• Choose vehicle types (Sedan, SUV, Tempo Traveller)\n• Select service frequency (Daily, Weekly, Monthly)\n• Add premium features (AC, GPS tracking)\n• Get instant cost estimates and savings\n\nThe calculator will show you both the estimated monthly cost and potential savings compared to traditional transport. Try it out!";
+      return "📊 **Mobility Opportunity Estimator**\n\nI'm scrolling you to our interactive Diagnostic Model below. You can:\n\n• Input monthly transport expenditure and employee counts\n• Model mathematical Identifiable Opportunity (corridor overlap, dead km)\n• Model realistic Implementable Opportunity (accounting for safety escorts & detour tolerances)\n• Request a verified telemetry diagnostic audit for your organization.";
     }
 
     // Use AI for more complex questions if configured
@@ -117,9 +117,8 @@ const ChatBot = () => {
       try {
         const aiResponse = await getGeminiResponse(input, conversationHistory);
 
-        // Update conversation history for context
         setConversationHistory((prev) => [
-          ...prev.slice(-10), // Keep last 10 exchanges for context
+          ...prev.slice(-10),
           `User: ${input}`,
           `Assistant: ${aiResponse}`,
         ]);
@@ -127,7 +126,6 @@ const ChatBot = () => {
         return aiResponse;
       } catch (error) {
         console.error("AI Response failed:", error);
-        // Fall through to backup responses
       }
     }
 
@@ -144,9 +142,8 @@ const ChatBot = () => {
       question.includes("good evening")
     ) {
       const greetings = [
-        "Hello! 👋 Welcome to **Velora E-Mobility Solutions** - India's leading smart transportation startup! I'm here to help you discover how we're revolutionizing workplace mobility for enterprises across the country. What would you like to know about our B2B transport models?",
-        "Hi there! 🚗 Great to see you at Velora! We're transforming corporate mobility with AI-powered route optimization and sustainable transport solutions. How can I help you learn about our exclusive and pooled transport models?",
-        "Hey! 🌟 Welcome to the future of enterprise transportation! Velora specializes in smart cab sharing, shuttle management, and fleet analytics for companies like yours. What aspect of our e-mobility solutions interests you most?",
+        "Hello! 👋 Welcome to **Velora Mobitech** — Enterprise Mobility Intelligence. We turn fragmented transport, vendor and financial data into actionable intelligence. How can I help you today?",
+        "Hi there! 🚗 Welcome to Velora. We sit as an independent analytical layer above existing ETMS tools to uncover cost leakage, capacity waste, and failure economics. What would you like to explore?",
       ];
       return greetings[Math.floor(Math.random() * greetings.length)];
     }
@@ -159,12 +156,12 @@ const ChatBot = () => {
       question.includes("company") ||
       question.includes("tell me about")
     ) {
-      return "🚀 **About Velora E-Mobility Solutions**\n\nWe're India's pioneering startup in smart transportation technology! Founded by **Krishna Vamsi Veerisetti** (CEO) and **Vijaya Balaji Tatta** (CTO), we specialize in:\n\n🎯 **B2B Corporate Transport Models**\n• Exclusive company travel solutions\n• Intelligent pooled transport with smart matching\n• AI-powered route optimization\n\n💡 **Technology Excellence**\n• Real-time analytics and reporting\n• Seamless HRIS, ERP & finance integration\n• Advanced fleet management\n\n🌱 **Sustainability Focus**\n• Green mobility solutions\n• Cost optimization for enterprises\n• Reduced carbon footprint\n\nWe're trusted by innovative companies, HR teams, and business leaders nationwide. How can we help transform your workplace mobility?";
+      return "📌 **About Velora — Enterprise Mobility Intelligence**\n\nVelora is an independent, vendor-neutral intelligence and orchestration layer designed specifically for corporate shift transport operations.\n\nKey Principles:\n• **Data Harmonization**: Integrates ETMS logs, raw GPS telematics, vendor invoices, contracts, and ERP ledgers.\n• **Failure Economics**: Measures the true composite cost of vendor failure (spot-ride markups, shift delays, and disputes).\n• **Explainability Standard**: Every recommendation is backed by observed evidence, explicit assumptions, and constraints.\n• **Pre-Validation**: Currently partnering with enterprise transport heads as Design Partners.";
     }
 
     // Help and capabilities
     if (question.includes("help") || question.includes("what can you do")) {
-      return "🤖 **I'm your Velora AI Assistant!** Here's how I can help:\n\n🚗 **Transport Models**\n• Exclusive vs Pooled transport options\n• Smart matching algorithms\n• Route optimization strategies\n\n� **Pricing & Business Models**\n• Cost estimation and savings calculator\n• Working models and implementation\n• ROI analysis for your company\n\n🌟 **Features & Benefits**\n• Real-time tracking and analytics\n• HRIS/ERP integration capabilities\n• Sustainability and green mobility\n\n📞 **Get Started**\n• Demo scheduling and consultation\n• Contact our expert team\n• Implementation guidance\n\n🔧 **Technology Insights**\n• AI/ML algorithms and smart systems\n• Platform capabilities and architecture\n\nJust ask me anything about Velora or corporate mobility solutions!";
+      return "🤖 **How I Can Assist You:**\n\n• **Specialized Intelligence Modules**: Cost, Utilization, Vendor, Failure, and Sustainability\n• **Failure Economics**: Calculation of Contract Tariff + Compound Failure Burden\n• **ETMS Integration**: How we work with MoveInSync, Safetrax, Routematic, Whistle, and SAP\n• **Mobility Diagnostic**: How to participate in our NDA-protected design partner audit\n• **Opportunity Framework**: Explaining Identifiable vs. Implementable savings\n\nAsk me any operational or financial question about corporate mobility!";
     }
 
     // How it works
@@ -172,31 +169,9 @@ const ChatBot = () => {
       question.includes("how does it work") ||
       question.includes("how it works") ||
       question.includes("process") ||
-      question.includes("implementation")
+      question.includes("sequence")
     ) {
-      return "🔄 **How Velora Works - Simple & Effective!**\n\n**Step 1: Assessment** �\n• We analyze your company's transport needs\n• Employee location mapping and shift patterns\n• Current transportation cost analysis\n\n**Step 2: Smart Planning** 🧠\n• AI-powered route optimization\n• Intelligent employee matching for pooled transport\n• Custom transport model design\n\n**Step 3: Seamless Integration** 🔗\n• Connect with your HRIS, ERP, and finance systems\n• Employee onboarding and app setup\n• Real-time tracking and analytics dashboard\n\n**Step 4: Ongoing Optimization** �\n• Continuous route and cost optimization\n• Performance analytics and reporting\n• Scalable solutions as your company grows\n\n**Result**: Up to 40% cost savings, improved employee satisfaction, and sustainable mobility! Ready to see how it works for your company?";
-    }
-
-    // Benefits and advantages
-    if (
-      question.includes("benefits") ||
-      question.includes("advantages") ||
-      question.includes("why velora") ||
-      question.includes("why choose")
-    ) {
-      return "🌟 **Why Companies Choose Velora E-Mobility?**\n\n💰 **Cost Savings**\n• Up to 40% reduction in transport costs\n• Optimized routes and fuel efficiency\n• Eliminate transport allowance overhead\n\n👥 **Employee Satisfaction**\n• Comfortable, reliable transportation\n• Real-time tracking and safety features\n• Flexible pickup/drop options\n\n🎯 **Operational Excellence**\n• Seamless HRIS/ERP integration\n• Automated attendance and reporting\n• Real-time analytics dashboard\n\n🌱 **Sustainability Goals**\n• Reduced carbon footprint\n• Green mobility initiatives\n• Corporate social responsibility\n\n🚀 **Technology Leadership**\n• AI-powered smart matching\n• Advanced route optimization\n• Scalable cloud-based platform\n\n🛡️ **Enterprise Security**\n• Driver verification and tracking\n• Emergency response systems\n• Compliance and safety standards\n\nReady to transform your company's mobility? Let's discuss your specific needs!";
-    }
-
-    // Thank you responses
-    if (question.includes("thank") || question.includes("thanks")) {
-      const thankYouResponses = [
-        "You're very welcome! 😊 I'm delighted to help you explore Velora's smart e-mobility solutions. Is there anything else you'd like to know about our transport models or how we can revolutionize your company's mobility?",
-        "My pleasure! 🚗 It's great to see your interest in sustainable corporate transportation. Feel free to ask about our pricing, implementation process, or schedule a demo with our expert team!",
-        "Absolutely happy to help! 🌟 Velora is here to make corporate mobility smarter and more sustainable. What other aspects of our B2B transport solutions would you like to explore?",
-      ];
-      return thankYouResponses[
-        Math.floor(Math.random() * thankYouResponses.length)
-      ];
+      return "🔄 **The Velora Operational Sequence**:\n\n1. **CONNECT**: Ingest and harmonize data across ETMS, GPS providers, vendor invoices, and ERP ledgers without replacing existing systems.\n2. **DIAGNOSE**: Isolate billing discrepancies, dead kilometres, low-occupancy corridors, and chronic SLA breach hotspots.\n3. **DECIDE**: Deliver ranked, constraint-aware operational recommendations with auditable evidence.\n4. **EXECUTE** *(Future Vision)*: Programmatic capacity clearing across multi-provider liquidity networks.";
     }
 
     // Contact and team information
@@ -207,21 +182,14 @@ const ChatBot = () => {
       question.includes("ceo") ||
       question.includes("cto")
     ) {
-      return "👥 **Meet the Velora Leadership Team**\n\n🎯 **Krishna Vamsi Veerisetti** - CEO & Founder\n• Leading innovation in smart e-mobility solutions\n• Email: kv@veloramobitech.systems\n• Phone: +91 8688505081\n\n💻 **Vijaya Balaji Tatta** - CTO & Co-Founder\n• Expert in AI/ML technologies & system architecture\n• Email: tvb@veloramobitech.systems\n• Phone: +91 9347767825\n\n🌐 **Get Started Today**\n• Visit our dashboard: dashboard.veloramobitech.systems\n• Schedule a personalized demo\n• Discuss your company's specific transport needs\n\nOur expert team is ready to help you transform your workplace mobility! Would you like to schedule a consultation?";
+      return "👥 **Velora Leadership & Research Team**\n\n• **Krishna Vamsi Veerisetti** - CEO & Founder\n  Enterprise validation & mobility economics | kv@veloramobitech.systems | +91 8688505081\n\n• **Vijaya Balaji Tatta** - CTO & Co-Founder\n  Telemetry reconciliation & spatial engines | tvb@veloramobitech.systems | +91 9347767825\n\nClick **Get a Mobility Diagnostic** in the top navigation to connect with our team directly.";
     }
 
-    // Goodbye responses
-    if (
-      question.includes("bye") ||
-      question.includes("goodbye") ||
-      question.includes("see you") ||
-      question.includes("later")
-    ) {
-      return "👋 Thank you for your interest in Velora E-Mobility Solutions! We're excited about the possibility of transforming your company's transportation. Don't forget to:\n\n✅ Check out our pricing calculator below\n✅ Schedule a demo for personalized insights\n✅ Contact our team for any questions\n\nHave a great day, and we look forward to revolutionizing your workplace mobility! 🚗🌟";
+    if (question.includes("thank") || question.includes("thanks")) {
+      return "You're welcome! Feel free to reach out if you'd like to explore how a Mobility Efficiency Diagnostic can identify cost leakage in your corporate fleet.";
     }
 
-    // Default response for unknown queries
-    return "🤔 I'd be happy to help you with that! Here are some popular topics I can assist with:\n\n🚗 **Transport Models** - Exclusive & Pooled options\n💰 **Pricing & ROI** - Cost savings and working models\n🌟 **Features & Benefits** - Technology and sustainability\n🚀 **Getting Started** - Demos and implementation\n👥 **Our Team** - Meet our founders and experts\n📞 **Contact Info** - Reach out to our specialists\n\nCould you please rephrase your question or ask about any of these topics? I'm here to help you discover how Velora can revolutionize your company's mobility!";
+    return "Velora helps enterprises discover where corporate mobility is losing money. Ask me about our 5 Intelligence Engines, Failure Economics, or how to get a Mobility Diagnostic.";
   };
 
   const handleSendMessage = async (customMessage?: string) => {
@@ -261,7 +229,7 @@ const ChatBot = () => {
       setTimeout(() => {
         const errorResponse: Message = {
           id: (Date.now() + 1).toString(),
-          text: "I'm having a temporary issue, but I can still help with Velora's transport models, pricing, or getting started with a demo. What would you like to know?",
+          text: "I'm having a temporary connection issue, but I can still help explain Velora's intelligence engines, Failure Economics, or how to get a Mobility Diagnostic. What would you like to explore?",
           isUser: false,
           timestamp: new Date(),
         };

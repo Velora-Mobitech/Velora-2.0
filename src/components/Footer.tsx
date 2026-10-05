@@ -42,9 +42,8 @@ const Footer = () => {
               >
                 Velora
               </button>
-              <p className="text-sm text-muted-foreground">
-                Revolutionizing workplace mobility with intelligent e-mobility
-                solutions for modern enterprises.
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Independent, vendor-neutral mobility intelligence reconciling telematics, vendor invoices, and contracts into actionable ground truth.
               </p>
               <div className="flex space-x-4">
                 <Button variant="ghost" size="icon" asChild>
@@ -91,90 +90,113 @@ const Footer = () => {
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-medium">Transport Models</h4>
+              <h4 className="font-semibold text-sm text-foreground">Intelligence Engines</h4>
               <ul className="space-y-2">
                 <li>
                   <button
-                    onClick={() => scrollToSection("features")}
+                    onClick={() => scrollToSection("intelligence")}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
                   >
-                    Exclusive Company Travel
+                    Cost Intelligence
                   </button>
                 </li>
                 <li>
                   <button
-                    onClick={() => scrollToSection("features")}
+                    onClick={() => scrollToSection("intelligence")}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
                   >
-                    Pooled Inter-Company Travel
+                    Utilization Intelligence
                   </button>
                 </li>
                 <li>
                   <button
-                    onClick={() => scrollToSection("features")}
+                    onClick={() => scrollToSection("intelligence")}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
                   >
-                    Smart Matching Algorithm
+                    Vendor Intelligence
                   </button>
                 </li>
                 <li>
                   <button
-                    onClick={() => scrollToSection("pricing")}
+                    onClick={() => scrollToSection("intelligence")}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
                   >
-                    Model Comparison
+                    Failure Intelligence
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("intelligence")}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
+                  >
+                    Sustainability Intelligence
                   </button>
                 </li>
               </ul>
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-medium">Features</h4>
+              <h4 className="font-semibold text-sm text-foreground">Decisions & Stack</h4>
               <ul className="space-y-2">
                 <li>
                   <button
-                    onClick={() => scrollToSection("features")}
+                    onClick={() => scrollToSection("how-it-works")}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
                   >
-                    Route Optimization
+                    Data Harmonization Flow
                   </button>
                 </li>
                 <li>
                   <button
-                    onClick={() => scrollToSection("features")}
+                    onClick={() => scrollToSection("decisions")}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
                   >
-                    Fleet Analytics
+                    Decision Engine Standard
                   </button>
                 </li>
                 <li>
                   <button
-                    onClick={() => scrollToSection("features")}
+                    onClick={() => scrollToSection("calculator")}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
                   >
-                    Green Mobility
+                    Opportunity Estimator
                   </button>
                 </li>
                 <li>
                   <button
-                    onClick={() => scrollToSection("features")}
+                    onClick={() => scrollToSection("validation")}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
                   >
-                    API Integration
+                    Design Partner Program
                   </button>
                 </li>
               </ul>
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-medium">Legal</h4>
+              <h4 className="font-semibold text-sm text-foreground">Validation & Action</h4>
               <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={() => {
+                      navigate("/get-demo");
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className="text-sm font-medium text-primary hover:underline text-left"
+                  >
+                    Get a Mobility Diagnostic →
+                  </button>
+                </li>
                 <li>
                   <a
-                    href="#"
+                    href="#validation"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection("validation");
+                    }}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    Privacy Policy
+                    Pre-Validation Methodology
                   </a>
                 </li>
                 <li>
@@ -182,7 +204,7 @@ const Footer = () => {
                     href="#"
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    Terms of Service
+                    Privacy & Telemetry Governance
                   </a>
                 </li>
                 <li>
@@ -190,16 +212,15 @@ const Footer = () => {
                     onClick={() => navigate("/analytics")}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
                   >
-                    Website Analytics
+                    Site Telemetry & Analytics
                   </button>
                 </li>
               </ul>
             </div>
-          </div>{" "}
+          </div>
           <div className="mt-8 pt-8 border-t border-border">
             <p className="text-sm text-muted-foreground text-center">
-              © {new Date().getFullYear()} Velora E-Mobility Solutions. All
-              rights reserved.
+              © {new Date().getFullYear()} Velora Mobitech. Enterprise Mobility Intelligence. All rights reserved.
             </p>
           </div>
         </div>

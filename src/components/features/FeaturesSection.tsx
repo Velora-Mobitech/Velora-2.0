@@ -7,16 +7,19 @@ export const FeaturesSection = () => {
   return (
     <section className="container px-4 py-24">
       {/* Header Section */}
-      <div className="max-w-2xl mb-20">
+      <div className="max-w-3xl mb-16">
+        <div className="inline-block mb-3 px-3 py-1 rounded-full glass">
+          <span className="text-xs uppercase tracking-wider font-semibold text-primary">
+            Analytical Engines
+          </span>
+        </div>
         <h2 className="text-5xl md:text-6xl font-normal mb-6 tracking-tight text-left">
-          B2B Transport
+          Five Specialized
           <br />
-          <span className="text-gradient font-medium">Models & Systems</span>
+          <span className="text-gradient font-medium">Intelligence Modules</span>
         </h2>
         <p className="text-lg md:text-xl text-muted-foreground text-left">
-          Discover our structured, scalable transport models designed
-          specifically for corporate needs. From exclusive company travel to
-          intelligent pooled systems, we deliver sustainable mobility solutions.
+          Independent analytical engines reconciling telematics, vendor invoices, contracts, and shift rosters to uncover operational truth and eliminate cost leakage.
         </p>
       </div>
 

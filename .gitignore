@@ -1,3 +1,14 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build outputs
+dist/
+dist-ssr/
+build/
+*.local
+
 # Logs
 logs
 *.log
@@ -7,26 +18,39 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Environment variables & secrets (not for deployment / git)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
 
-# Editor directories and files
+# Documentation, references, and markdown files (not necessary for deployment)
+*.md
+references/
+docs/
+
+# Editor & OS files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+Thumbs.db
 
-# Deployment
+# Deployment platform caches
 .vercel
 .netlify
 
-# Environment variables
-.env.local
-.env.production.local
+# Cache and temporary build artifacts
+.cache/
+.eslintcache
+*.tsbuildinfo
+coverage/
+temp/
+tmp/
